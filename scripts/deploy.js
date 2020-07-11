@@ -4,7 +4,7 @@ ghpages.publish(
     '__sapper__/export',
     {
         branch: 'master',
-        repo: 'github.com:sawady/pwa-experiment.git',
+        repo: 'git@github.com:sawady/sawady.github.io.git',
         user: {
             name: 'sawady',
             email: 'sawady.faso@gmail.com'
