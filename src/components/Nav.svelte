@@ -58,17 +58,26 @@
   .button {
     cursor: pointer;
   }
+
+  .logo {
+    height: 50px;
+  }
 </style>
 
 <nav>
   <ul>
+    <li>
+      <img class="logo" alt="" src="logo.png" />
+    </li>
     <li>
       <a aria-current={segment === undefined ? 'page' : undefined} href=".">
         home
       </a>
     </li>
     <li>
-      <a aria-current={segment === 'pedidos' ? 'page' : undefined} href="pedidos">
+      <a
+        aria-current={segment === 'pedidos' ? 'page' : undefined}
+        href="pedidos">
         pedidos
       </a>
     </li>
