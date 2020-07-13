@@ -1,5 +1,5 @@
 <script>
-  import { user } from "../stores/User.js";
+  import { user } from "../stores/user.js";
   let email = "";
   let password = "";
 
@@ -46,7 +46,7 @@
 
 <form>
   <input bind:value={email} placeholder="email" />
-  <input bind:value={password} placeholder="contraseña" />
+  <input bind:value={password} placeholder="contraseña" type="password" />
 </form>
 
 <button on:click={login}>Ingresar</button>

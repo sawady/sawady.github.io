@@ -1,6 +1,6 @@
 <script>
   import LoginForm from "../components/LoginForm.svelte";
-  import { user } from "../stores/User.js";
+  import { user } from "../stores/user.js";
 </script>
 
 <style>

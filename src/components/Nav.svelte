@@ -1,5 +1,8 @@
 <script>
-  import { user } from "../stores/User.js";
+  import Icon from "svelte-awesome/components/Icon.svelte";
+  import { windowClose, shoppingCart, listAlt } from "svelte-awesome/icons";
+
+  import { user } from "../stores/user.js";
 
   export let segment;
 
@@ -11,32 +14,13 @@
 <style>
   nav {
     border-bottom: 1px solid rgba(255, 62, 0, 0.1);
-    font-weight: 300;
     padding: 0 1em;
     display: flex;
     justify-content: space-between;
   }
 
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-
-  /* clearfix */
-  ul::after {
-    content: "";
-    display: block;
-    clear: both;
-  }
-
-  li {
-    display: block;
-    float: left;
-  }
-
   [aria-current] {
     position: relative;
-    display: inline-block;
   }
 
   [aria-current]::after {
@@ -51,51 +35,51 @@
 
   a {
     text-decoration: none;
-    padding: 1em 0.5em;
-    display: block;
+    padding: 0.75em 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .button {
-    cursor: pointer;
+  a > span {
+    margin-left: 10px;
   }
 
-  .logo {
-    height: 50px;
+  @media (max-width: 375px) {
+    a > span {
+      display: none;
+    }
+  }
+
+  img {
+    height: 1.5em;
+  }
+
+  .section {
+    display: flex;
   }
 </style>
 
 <nav>
-  <ul>
-    <li>
-      <img class="logo" alt="" src="logo.png" />
-    </li>
-    <li>
-      <a aria-current={segment === undefined ? 'page' : undefined} href=".">
-        home
-      </a>
-    </li>
-    <li>
-      <a
-        aria-current={segment === 'pedidos' ? 'page' : undefined}
-        href="pedidos">
-        pedidos
-      </a>
-    </li>
-
-    <!-- for the productos link, we're using rel=prefetch so that Sapper prefetches
-		     the productos data when we hover over the link or tap it on a touchscreen -->
-    <li>
-      <a
-        rel="prefetch"
-        aria-current={segment === 'productos' ? 'page' : undefined}
-        href="productos">
-        productos
-      </a>
-    </li>
-  </ul>
-  <ul class="end">
-    <li>
-      <a class="button" href="/" on:click={logout}>Salir</a>
-    </li>
-  </ul>
+  <div class="section">
+    <a aria-current={segment === undefined ? 'page' : undefined} href=".">
+      <img alt="" src="logo.png" />
+    </a>
+    <a aria-current={segment === 'pedidos' ? 'page' : undefined} href="pedidos">
+      <Icon data={listAlt} />
+      <span media="(max-width: 375px)">pedidos</span>
+    </a>
+    <a
+      rel="prefetch"
+      aria-current={segment === 'productos' ? 'page' : undefined}
+      href="productos">
+      <Icon data={shoppingCart} />
+      <span media="(max-width: 375px)">productos</span>
+    </a>
+  </div>
+  <div class="section">
+    <a style="cursor: pointer" href="/" on:click={logout}>
+      <Icon data={windowClose} />
+    </a>
+  </div>
 </nav>
