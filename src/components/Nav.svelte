@@ -67,14 +67,20 @@
     </a>
     <a aria-current={segment === 'pedidos' ? 'page' : undefined} href="pedidos">
       <Icon data={listAlt} />
-      <span media="(max-width: 375px)">pedidos</span>
+      <span media="(max-width: 375px)">Pedidos</span>
     </a>
     <a
       rel="prefetch"
       aria-current={segment === 'productos' ? 'page' : undefined}
       href="productos">
       <Icon data={shoppingCart} />
-      <span media="(max-width: 375px)">productos</span>
+      <span media="(max-width: 375px)">Productos</span>
+    </a>
+    <a
+      rel="prefetch"
+      aria-current={segment === 'confirmacion' ? 'page' : undefined}
+      href="confirmacion">
+      <span media="(max-width: 375px)">Confirmacion</span>
     </a>
   </div>
   <div class="section">

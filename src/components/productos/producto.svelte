@@ -1,15 +1,38 @@
 <script>
   import Icon from "svelte-awesome/components/Icon.svelte";
   import { plusCircle, minusCircle } from "svelte-awesome/icons";
-
+  import { carrito } from "../../stores/Carrito.js";
+  import { saveCarrito, getCarrito } from "../../service/Storage.js";
   export let producto;
 
-  let cantidad = 0;
+  $: productoDeCarrito = $carrito.productosCotizados.get(producto.id);
+  $: cantidad = productoDeCarrito ? productoDeCarrito.cantidad : 0;
 
-  function update(n) {
-      return () => {
-          cantidad = cantidad + n;
-      }
+  const actualizarCarrito = () => {
+    const productosCotizados = $carrito.productosCotizados;
+    if (productoDeCarrito.cantidad <= 0) {
+      productosCotizados.delete(producto.id);
+    } else {
+      productosCotizados.set(producto.id, productoDeCarrito);
+    }
+    carrito.update(c => ({ ...c, productosCotizados: productosCotizados }));
+    saveCarrito($carrito);
+  }
+
+  const addProduct = () => {
+    if (!productoDeCarrito) {
+      producto.cantidad = 0;
+      productoDeCarrito = producto;
+    }
+    productoDeCarrito.cantidad++;
+    actualizarCarrito();
+  }
+
+  const discountProduct = () => {
+    if (productoDeCarrito) {
+      productoDeCarrito.cantidad--;
+      actualizarCarrito();
+    }
   }
 </script>
 
@@ -67,10 +90,10 @@
     <div class="buttons">
       <div>Cantidad: {cantidad}</div>
       <div>
-        <button on:click={update(1)}>
+        <button on:click={addProduct}>
           <Icon data={plusCircle} class="alert" scale={1.5} />
         </button>
-        <button on:click={update(-1)}>
+        <button on:click={discountProduct}>
           <Icon data={minusCircle} class="alert" scale={1.5} />
         </button>
       </div>
