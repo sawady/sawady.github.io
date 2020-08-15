@@ -47,6 +47,10 @@
     background-color: #9e6a2a;
   }
 
+  .container {
+    margin-top: 10px;
+  }
+
 </style>
 
 <script>
@@ -54,9 +58,13 @@
   import { getProductos } from '../service/Productos.js';
   import { productos } from '../stores/productos.js';
   import Icon from "svelte-awesome/components/Icon.svelte";
-import Spinner from "../components/Spinner.svelte";
+  import Spinner from "../components/Spinner.svelte";
+  import { close } from "svelte-awesome/icons";
+  import Chip from "../components/Chip.svelte";
+  import Alert from "../components/Alert.svelte";
 
-  let nombre = '';
+  const query = {};
+  let nombreDeBusqueda = '';
 
   const getProductosResponse = async () => {
     const nuevos_productos = await getProductos();
@@ -68,8 +76,15 @@ import Spinner from "../components/Spinner.svelte";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    productosParaRender = getProductos(nombre);
+    productosParaRender = getProductos(query);
+    nombreDeBusqueda = query.nombre;
     e.target.reset();
+  }
+
+  const resetBusqueda = () => {
+    nombreDeBusqueda = '';
+    query.nombre = '';
+    productosParaRender = $productos;
   }
 
 </script>
@@ -81,11 +96,18 @@ import Spinner from "../components/Spinner.svelte";
 <h1>Selecciona productos</h1>
 
 <form on:submit={handleSubmit}>
-  <input required type="text" bind:value={nombre} placeholder="Nombre de un producto">
+  <input required type="text" bind:value={query.nombre} placeholder="Nombre de un producto">
   <button type="submit">
     buscar
   </button>
 </form>
+{#if nombreDeBusqueda}
+  <div class="container">
+    Busqueda:
+    <Chip nombre={nombreDeBusqueda} handleClose={resetBusqueda} />
+  </div>
+{/if}
+
 {#await productosParaRender}
   <div class="center">
     <Spinner />
@@ -93,6 +115,10 @@ import Spinner from "../components/Spinner.svelte";
 {:then p}
   {#each p.items as producto}
     <Producto producto={producto} />
+    {:else}
+    <Alert>
+      No hay productos disponibles.
+    </Alert>
   {/each}
 {/await}
 

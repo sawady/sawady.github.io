@@ -2,6 +2,6 @@ import API from './HttpService.js';
 
 const url = 'productos';
 
-export const getProductos = (nombre = '') => {
-  return API.get(`${url}?nombre=${nombre}`);
+export const getProductos = (query) => {
+  return API.get(url, query);
 }
