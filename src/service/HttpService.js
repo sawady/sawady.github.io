@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = axios.create({
-  baseURL: `${process.env.API_BASE_URL}/api/`,
+  baseURL: `http://localhost:8000/api/`,
 })
 
 const apiRequest = (method, url, data) => {
