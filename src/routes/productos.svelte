@@ -47,7 +47,7 @@
     background-color: #9e6a2a;
   }
 
-  .container {
+  .mt-10 {
     margin-top: 10px;
   }
 
@@ -62,6 +62,8 @@
   import { close } from "svelte-awesome/icons";
   import Chip from "../components/Chip.svelte";
   import Alert from "../components/Alert.svelte";
+  import BottomButtonNav from "../components/productos/BottomButtonNav.svelte";
+  import { goto } from '@sapper/app';
 
   const query = {};
   let nombreDeBusqueda = '';
@@ -87,6 +89,10 @@
     productosParaRender = $productos;
   }
 
+  const handleClick = () => {
+    goto('confirmacion');
+  }
+
 </script>
 
 <svelte:head>
@@ -94,7 +100,6 @@
 </svelte:head>
 
 <h1>Selecciona productos</h1>
-
 <form on:submit={handleSubmit}>
   <input required type="text" bind:value={query.nombre} placeholder="Nombre de un producto">
   <button type="submit">
@@ -102,12 +107,11 @@
   </button>
 </form>
 {#if nombreDeBusqueda}
-  <div class="container">
+  <div class="mt-10">
     Busqueda:
     <Chip nombre={nombreDeBusqueda} handleClose={resetBusqueda} />
   </div>
 {/if}
-
 {#await productosParaRender}
   <div class="center">
     <Spinner />
@@ -121,4 +125,4 @@
     </Alert>
   {/each}
 {/await}
-
+<BottomButtonNav nombre="realizar pedido" handleClick={handleClick} />

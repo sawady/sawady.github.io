@@ -2,6 +2,7 @@
   import { carrito } from "../stores/Carrito.js";
   import Producto from "../components/productos/producto.svelte";
   import Alert from "../components/Alert.svelte";
+  import BottomButtonNav from "../components/productos/BottomButtonNav.svelte";
 </script>
 
 <style>
@@ -22,6 +23,7 @@
 
 {#each [...$carrito.productosCotizados.values()] as producto}
   <Producto producto={producto} />
+  <BottomButtonNav nombre="confirmar pedido" handleClick={() => null} />
   {:else}
   <Alert>
     No hay ningun producto para confirmar, seleccione en

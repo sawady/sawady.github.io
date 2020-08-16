@@ -76,12 +76,6 @@
       <Icon data={shoppingCart} />
       <span media="(max-width: 375px)">Productos</span>
     </a>
-    <a
-      rel="prefetch"
-      aria-current={segment === 'confirmacion' ? 'page' : undefined}
-      href="confirmacion">
-      <span media="(max-width: 375px)">Confirmacion</span>
-    </a>
   </div>
   <div class="section">
     <a style="cursor: pointer" href="/" on:click={logout}>
