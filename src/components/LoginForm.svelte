@@ -1,10 +1,17 @@
 <script>
   import { user } from "../stores/user.js";
+  import { getUsuarios } from "../service/Usuarios.js";
+  import { users } from "svelte-awesome/icons";
+  import Alert from "../components/Alert.svelte";
   let email = "";
   let password = "";
+  let error = false;
 
-  function login() {
-      user.set(() => ({}));
+  const login = async (e) => {
+    e.preventDefault();
+    const users = await getUsuarios({ email: email });
+    users.items.length ? user.set(() => (users.items[0])) : error = true;
+    e.target.reset();
   }
 </script>
 
@@ -44,9 +51,14 @@
   }
 </style>
 
-<form>
-  <input bind:value={email} placeholder="email" />
-  <input bind:value={password} placeholder="contraseña" type="password" />
+<form on:submit={login}>
+  <input bind:value={email} placeholder="email" type="email" required />
+  <input bind:value={password} placeholder="contraseña" type="password" required />
+  <button type="submit">Ingresar</button>
 </form>
 
-<button on:click={login}>Ingresar</button>
+{#if error}
+  <Alert>
+    Los datos ingresados no son validos.
+  </Alert>
+{/if}

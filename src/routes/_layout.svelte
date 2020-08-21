@@ -1,6 +1,7 @@
 <script>
   import Nav from "../components/Nav.svelte";
   import { user } from "../stores/user.js";
+  import LoginForm from "../components/LoginForm.svelte";
 
   export let segment;
 </script>
@@ -14,6 +15,17 @@
     margin: 0 auto;
     box-sizing: border-box;
   }
+
+  figure {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  img {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 0 1em 0;
+  }
 </style>
 
 {#if $user}
@@ -21,5 +33,12 @@
 {/if}
 
 <main>
-  <slot />
+  {#if !$user}
+    <figure>
+      <img alt="Distribuyendo" src="logo.png" />
+    </figure>
+    <LoginForm />
+    {:else}
+    <slot />
+  {/if}
 </main>
