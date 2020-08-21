@@ -12,7 +12,7 @@ const apiRequest = (method, url, data, params) => {
     data: data
   })
   .then(res => res.data)
-  .catch(err => console.log(err));
+  .catch(err => console.log(err.response));
 }
 
 const get = (url, params = {}) => apiRequest("get", url, {}, params);

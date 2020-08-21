@@ -2,6 +2,7 @@
   import { user } from "../stores/user.js";
   import { getUsuarios } from "../service/Usuarios.js";
   import { users } from "svelte-awesome/icons";
+  import { carrito } from "../stores/Carrito.js";
   import Alert from "../components/Alert.svelte";
   let email = "";
   let password = "";
@@ -10,7 +11,13 @@
   const login = async (e) => {
     e.preventDefault();
     const users = await getUsuarios({ email: email });
-    users.items.length ? user.set(() => (users.items[0])) : error = true;
+    if (users.items.length) {
+      const _user = users.items[0];
+      user.update(() => _user)
+      carrito.update(carrito => ({...carrito, user_id: _user.id}));
+    } else {
+      error = true;
+    }
     e.target.reset();
   }
 </script>

@@ -13,16 +13,15 @@ const set = (key, value) => {
 const convertMapToString = (map) => JSON.stringify(Array.from(map.entries()));
 const convertStringMap = (stringMap) => new Map(JSON.parse(stringMap));
 
-
 export const getCarrito = () => {
   const carrito = get('carrito');
-  carrito && (carrito.productosCotizados = convertStringMap(carrito.productosCotizados));
+  carrito && (carrito.productos = convertStringMap(carrito.productos));
   return carrito;
 };
 
 export const saveCarrito = (carrito) => {
   set('carrito', {
     ...carrito,
-    productosCotizados: convertMapToString(carrito.productosCotizados),
+    productos: convertMapToString(carrito.productos),
   });
 };

@@ -55,7 +55,7 @@
   export let handleClick;
 </script>
 
-{#if $carrito.productosCotizados.size != 0}
+{#if $carrito.productos.size != 0}
   <nav>
     <button class="fade-in" on:click={handleClick}>
       {nombre}

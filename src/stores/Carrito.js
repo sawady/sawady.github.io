@@ -1,9 +1,11 @@
 import { writable } from 'svelte/store';
-import { getCarrito } from '../service/Storage';
+import { getCarrito } from '../service/Storage.js';
 
 const carritoProps = {
-  confirmada: false,
-  productosCotizados: new Map(),
+  confirmado: false,
+  cliente: 'anonimo',
+  distribuidora_id: 1,
+  productos: new Map(),
 }
 
 const getCarritoBrowser = () => (typeof window !== 'undefined' && getCarrito()) || carritoProps;

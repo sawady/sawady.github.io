@@ -2,20 +2,20 @@
   import Icon from "svelte-awesome/components/Icon.svelte";
   import { plusCircle, minusCircle } from "svelte-awesome/icons";
   import { carrito } from "../../stores/Carrito.js";
-  import { saveCarrito, getCarrito } from "../../service/Storage.js";
+  import { saveCarrito } from "../../service/Storage.js";
   export let producto;
 
-  $: productoDeCarrito = $carrito.productosCotizados.get(producto.id);
+  $: productoDeCarrito = $carrito.productos.get(producto.id);
   $: cantidad = productoDeCarrito ? productoDeCarrito.cantidad : 0;
 
   const actualizarCarrito = () => {
-    const productosCotizados = $carrito.productosCotizados;
+    const productos = $carrito.productos;
     if (productoDeCarrito.cantidad <= 0) {
-      productosCotizados.delete(producto.id);
+      productos.delete(producto.id);
     } else {
-      productosCotizados.set(producto.id, productoDeCarrito);
+      productos.set(producto.id, productoDeCarrito);
     }
-    carrito.update(c => ({ ...c, productosCotizados: productosCotizados }));
+    carrito.update(c => ({ ...c, productos: productos }));
     saveCarrito($carrito);
   }
 
@@ -85,7 +85,7 @@
   <div class="descripcion">
     <div>
       <div class="name">{producto.nombre}</div>
-      <div>${producto.precio}</div>
+      <div>${producto.precio.valor}</div>
     </div>
     <div class="buttons">
       <div>Cantidad: {cantidad}</div>
