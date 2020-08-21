@@ -64,35 +64,67 @@
   import Alert from "../components/Alert.svelte";
   import BottomButtonNav from "../components/productos/BottomButtonNav.svelte";
   import { goto } from '@sapper/app';
+  import { onMount } from "svelte";
+  import InfiniteScroll from "../components/InfiniteScroll.svelte";
 
-  const query = {};
-  let nombreDeBusqueda = '';
+  let filtro = {
+    count: 10,
+    nombre: '',
+  }
+  let paginacion = {
+    page: 1,
+    last_page: 1,
+  }
+  let nombreChip = '';
+  let cntTotalData = 0;
+  $: data = [];
+  let loading = true;
 
-  const getProductosResponse = async () => {
-    const nuevos_productos = await getProductos();
-    productos.update(_ => nuevos_productos);
-    return nuevos_productos;
+  onMount(async () => {
+    if (!$productos) {
+      await setProductos();
+      productos.update(_ => ({ ...paginacion, page: 1, items: data }));
+    } else {
+      set_data($productos);
+    }
+    loading = false;
+  });
+
+  const set_data = (newData) => {
+    if (newData.page === 1) {
+      cntTotalData = newData.items.length;
+      data = newData.items;
+    } else {
+      cntTotalData += newData.items.length;
+      data = [...data, ...newData.items];
+    }
+    paginacion = { page: newData.page + 1, last_page: newData.last_page };
   }
 
-  let productosParaRender = $productos || getProductosResponse();
+  const setProductos = async (queryParams = { ...filtro, ...paginacion }) => {
+    set_data(await getProductos(queryParams));
+  }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    productosParaRender = getProductos(query);
-    nombreDeBusqueda = query.nombre;
+    loading = true;
+    await setProductos(filtro);
+    loading = false;
+    nombreChip = filtro.nombre;
     e.target.reset();
   }
 
   const resetBusqueda = () => {
-    nombreDeBusqueda = '';
-    query.nombre = '';
-    productosParaRender = $productos;
+    nombreChip = '';
+    filtro.nombre = '';
+    set_data($productos);
   }
 
   const handleClick = () => {
     goto('confirmacion');
   }
 
+  const esLaUltimaPagina = () => paginacion.page - 1 === paginacion.last_page;
 </script>
 
 <svelte:head>
@@ -101,28 +133,36 @@
 
 <h1>Selecciona productos</h1>
 <form on:submit={handleSubmit}>
-  <input required type="text" bind:value={query.nombre} placeholder="Nombre de un producto">
+  <input required type="text" bind:value={filtro.nombre} placeholder="Nombre de un producto">
   <button type="submit">
     buscar
   </button>
 </form>
-{#if nombreDeBusqueda}
+
+{#if nombreChip}
   <div class="mt-10">
     Busqueda:
-    <Chip nombre={nombreDeBusqueda} handleClose={resetBusqueda} />
+    <Chip nombre={nombreChip} handleClose={resetBusqueda} />
   </div>
 {/if}
-{#await productosParaRender}
+
+{#if loading}
   <div class="center">
     <Spinner />
   </div>
-{:then p}
-  {#each p.items as producto}
-    <Producto producto={producto} />
-    {:else}
-    <Alert>
-      No hay productos disponibles.
-    </Alert>
-  {/each}
-{/await}
-<BottomButtonNav nombre="realizar pedido" handleClick={handleClick} />
+  {:else}
+    {#each data as producto, i}
+      <Producto producto={producto} />
+      {#if cntTotalData === i + 1}
+        <InfiniteScroll hasMore={!esLaUltimaPagina()} handleScroll={() => setProductos()} />
+      {/if}
+    {/each}
+{/if}
+
+{#if !(loading || cntTotalData)}
+  <Alert>
+    No hay productos disponibles.
+  </Alert>
+{/if}
+
+<BottomButtonNav nombre="ver pedido" handleClick={handleClick} />
