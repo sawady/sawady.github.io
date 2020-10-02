@@ -5,7 +5,6 @@
     box-sizing: border-box;
     border-radius: .25rem;
     border: 1px solid transparent;
-    background-color: #c47e29;
     color: #ffffff;
     font-size: 12px;
     font-weight: 400;
@@ -39,6 +38,14 @@
     animation-duration: .2s;
   }
 
+  .enabled {
+    background-color: #c47e29;
+  }
+
+  .disabled {
+    background-color: #cac0b4;
+  }
+
   @keyframes fadeInOpacity {
     0% {
       opacity: 0;
@@ -47,18 +54,36 @@
       opacity: 1;
     }
   }
+
+  .container-spinner {
+    position: absolute;
+    top: -5px;
+  }
+
+  .mb-2 {
+    margin-bottom: 2rem;
+  }
 </style>
 
 <script>
   import { carrito } from "../../stores/Carrito.js";
+  import Spinner from "../Spinner.svelte";
+
   export let nombre;
   export let handleClick;
+  export let loading = false;
 </script>
 
 {#if $carrito.productos.size != 0}
+  <section class="mb-2"><slot /></section>
   <nav>
-    <button class="fade-in" on:click={handleClick}>
+    {#if loading}
+      <div class="container-spinner"><Spinner /></div>
+    {/if}
+    <button class={`fade-in ${ loading ? 'disabled' : 'enabled' } `} on:click={handleClick} disabled={loading}>
       {nombre}
     </button>
   </nav>
+  {:else}
+  <slot />
 {/if}

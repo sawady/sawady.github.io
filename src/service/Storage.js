@@ -10,6 +10,11 @@ const set = (key, value) => {
   window.localStorage.setItem(key, JSON.stringify(value));
 }
 
+export const clearStorage = () => {
+  window.localStorage.clear();
+}
+
+
 const convertMapToString = (map) => JSON.stringify(Array.from(map.entries()));
 const convertStringMap = (stringMap) => new Map(JSON.parse(stringMap));
 
@@ -25,3 +30,8 @@ export const saveCarrito = (carrito) => {
     productos: convertMapToString(carrito.productos),
   });
 };
+
+export const saveToken = (token) => set('access_token', token);
+
+export const getToken = () => get('access_token');
+

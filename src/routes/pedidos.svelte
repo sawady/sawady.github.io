@@ -15,6 +15,7 @@
   import { getUser } from "../service/Usuarios.js";
   import Snipper from "../components/Spinner.svelte";
   import Pedido from "../components/Pedido.svelte";
+  import Alert from "../components/Alert.svelte";
 </script>
 
 <svelte:head>
@@ -28,5 +29,9 @@
 {:then user}
   {#each user.pedidos as pedido}
     <Pedido pedido={pedido} />
+    {:else}
+    <Alert>
+      No hay pedidos realizados aún.
+    </Alert>
   {/each}
 {/await}

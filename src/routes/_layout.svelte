@@ -2,8 +2,20 @@
   import Nav from "../components/Nav.svelte";
   import { user } from "../stores/user.js";
   import LoginForm from "../components/LoginForm.svelte";
+  import { onMount } from "svelte";
+  import { getToken } from "../service/Storage";
+  import { me } from "../service/Auth";
 
   export let segment;
+  let loading = true;
+
+  onMount(async () => {
+    loading = true;
+    if (getToken()) {
+      await me();
+    }
+    loading = false;
+  });
 </script>
 
 <style>
@@ -32,13 +44,15 @@
   <Nav {segment} />
 {/if}
 
-<main>
-  {#if !$user}
-    <figure>
-      <img alt="Distribuyendo" src="logo.png" />
-    </figure>
-    <LoginForm />
-    {:else}
-    <slot />
-  {/if}
-</main>
+{#if !loading}
+  <main>
+    {#if !$user}
+      <figure>
+        <img alt="Distribuyendo" src="logo.png" />
+      </figure>
+      <LoginForm />
+      {:else}
+      <slot />
+    {/if}
+  </main>
+{/if}

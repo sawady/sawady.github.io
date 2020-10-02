@@ -146,23 +146,23 @@
   </div>
 {/if}
 
-{#if loading}
-  <div class="center">
-    <Spinner />
-  </div>
-  {:else}
-    {#each data as producto, i}
-      <Producto producto={producto} />
-      {#if cntTotalData === i + 1}
-        <InfiniteScroll hasMore={!esLaUltimaPagina()} handleScroll={() => setProductos()} />
-      {/if}
-    {/each}
-{/if}
+<BottomButtonNav nombre="ver pedido" handleClick={handleClick}>
+  {#if loading}
+    <div class="center">
+      <Spinner />
+    </div>
+    {:else}
+      {#each data as producto, i}
+        <Producto producto={producto} />
+        {#if cntTotalData === i + 1}
+          <InfiniteScroll hasMore={!esLaUltimaPagina()} handleScroll={() => setProductos()} />
+        {/if}
+      {/each}
+  {/if}
 
-{#if !(loading || cntTotalData)}
-  <Alert>
-    No hay productos disponibles.
-  </Alert>
-{/if}
-
-<BottomButtonNav nombre="ver pedido" handleClick={handleClick} />
+  {#if !(loading || cntTotalData)}
+    <Alert>
+      No hay productos disponibles.
+    </Alert>
+  {/if}
+</BottomButtonNav>

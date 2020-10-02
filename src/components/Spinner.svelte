@@ -13,51 +13,63 @@
     height: 12px;
     border-radius: 3px / 6px;
     transform-origin: 3px 26px;
-  }.ldio-9tlse08bmp div:nth-child(1) {
+  }
+  .ldio-9tlse08bmp div:nth-child(1) {
     transform: rotate(0deg);
     animation-delay: -0.9166666666666666s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(2) {
+  }
+  .ldio-9tlse08bmp div:nth-child(2) {
     transform: rotate(30deg);
     animation-delay: -0.8333333333333334s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(3) {
+  }
+  .ldio-9tlse08bmp div:nth-child(3) {
     transform: rotate(60deg);
     animation-delay: -0.75s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(4) {
+  }
+  .ldio-9tlse08bmp div:nth-child(4) {
     transform: rotate(90deg);
     animation-delay: -0.6666666666666666s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(5) {
+  }
+  .ldio-9tlse08bmp div:nth-child(5) {
     transform: rotate(120deg);
     animation-delay: -0.5833333333333334s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(6) {
+  }
+  .ldio-9tlse08bmp div:nth-child(6) {
     transform: rotate(150deg);
     animation-delay: -0.5s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(7) {
+  }
+  .ldio-9tlse08bmp div:nth-child(7) {
     transform: rotate(180deg);
     animation-delay: -0.4166666666666667s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(8) {
+  }
+  .ldio-9tlse08bmp div:nth-child(8) {
     transform: rotate(210deg);
     animation-delay: -0.3333333333333333s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(9) {
+  }
+  .ldio-9tlse08bmp div:nth-child(9) {
     transform: rotate(240deg);
     animation-delay: -0.25s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(10) {
+  }
+  .ldio-9tlse08bmp div:nth-child(10) {
     transform: rotate(270deg);
     animation-delay: -0.16666666666666666s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(11) {
+  }
+  .ldio-9tlse08bmp div:nth-child(11) {
     transform: rotate(300deg);
     animation-delay: -0.08333333333333333s;
     background: #f5c037;
-  }.ldio-9tlse08bmp div:nth-child(12) {
+  }
+  .ldio-9tlse08bmp div:nth-child(12) {
     transform: rotate(330deg);
     animation-delay: 0s;
     background: #f5c037;

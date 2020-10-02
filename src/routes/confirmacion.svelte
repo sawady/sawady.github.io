@@ -6,10 +6,16 @@
   import { postPedido } from "../service/Pedidos.js";
   import { saveCarrito } from "../service/Storage.js";
 
+  let pedidoRealizado = false;
+  let loading = false;
+
   const realizarPedido = async () => {
-    const response = await postPedido($carrito);
+    loading = true;
+    await postPedido($carrito);
     carrito.update(c => ({...c, productos: new Map()}));
     saveCarrito($carrito);
+    pedidoRealizado = true;
+    loading = false;
   }
 
 </script>
@@ -32,10 +38,18 @@
 
 {#each [...$carrito.productos.values()] as producto}
   <Producto producto={producto} />
-  <BottomButtonNav nombre="confirmar pedido" handleClick={realizarPedido} />
   {:else}
-  <Alert>
-    No hay ningun producto para confirmar, seleccione en
-    <a rel="prefetch" href="productos">Productos</a>.
-  </Alert>
+    {#if pedidoRealizado}
+      <Alert className="success">
+        El pedido se realizo correctamente, puede ver mas detalles en
+        <a rel="prefetch" href="pedidos">Pedidos</a>.
+      </Alert>
+      {:else}
+      <Alert>
+        No hay ningun producto para confirmar, seleccione en
+        <a rel="prefetch" href="productos">Productos</a>.
+      </Alert>
+    {/if}
 {/each}
+
+<BottomButtonNav loading={loading} nombre="confirmar pedido" handleClick={realizarPedido} />

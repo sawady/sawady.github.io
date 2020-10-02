@@ -1,14 +1,13 @@
 <script>
   import Icon from "svelte-awesome/components/Icon.svelte";
   import { windowClose, shoppingCart, listAlt } from "svelte-awesome/icons";
+  import { logout } from "../service/Auth";
 
-  import { user } from "../stores/user.js";
+  const handleClick = () => {
+    logout();
+  }
 
   export let segment;
-
-  function logout() {
-    user.set(null);
-  }
 </script>
 
 <style>
@@ -78,7 +77,7 @@
     </a>
   </div>
   <div class="section">
-    <a style="cursor: pointer" href="/" on:click={logout}>
+    <a style="cursor: pointer" href="/" on:click={handleClick}>
       <Icon data={windowClose} />
     </a>
   </div>
